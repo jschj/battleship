@@ -1,40 +1,22 @@
+/*
+	Diese Klasse enthält grundlegende Informationen über jeden Schifftypen.
+*/
+
 package battleGame;
 
 
 
 public class Ship 
 {
-	public int length;
-	public int health;
-	public boolean placed;
-	
-	public Ship(String name)
-	{
-		int id;
-		
-		id = getShipIdByName(name);
-		
-		if (id == INVALID_ID) id = 6;
-		
-		length = getShipLengthById(id);
-		health = length;
-		placed = false;
-	}
-	
-	//
-	
-	public static final int INVALID_ID = -1;
-	
-	private static final String[] shipNames = 
-	{
-		"Cruiser 1",
-		"Destroyer 1",
-		"Destroyer 2",
-		"Submarine 1",
-		"Submarine 2",
-		"Submarine 3",
-		"Water"
-	};
+	//die festgelegten ID's der Schiffe, die Konform mit den Zellen auf dem Schlachtfeld 
+	//und dem ship-Array in der Klasse Battlefield sind
+	public static final int ID_CRUISER_1 = 0,
+		ID_DESTROYER_1 = 1,
+		ID_DESTROYER_2 = 2,
+		ID_SUBMARINE_1 = 3,
+		ID_SUBMARINE_2 = 4,
+		ID_SUBMARINE_3 = 5,
+		ID_WATER = 6;
 	
 	private static final int[] shipLengths = 
 	{
@@ -46,24 +28,22 @@ public class Ship
 		2,
 		0
 	};
-	
-	public static String getShipNameById(int id)
-	{
-		return shipNames[id];
-	}
-	
+		
 	public static int getShipLengthById(int id)
 	{
 		return shipLengths[id];
 	}
-	
-	public static int getShipIdByName(String name)
-	{
-		for (int i = 0; i < shipNames.length; i++)
-		{
-			if (name.equals(shipNames[i])) return i;
-		}
 		
-		return -1;
-	}
+	//hier beginnt die eigentliche Klasse, die Informationen über das jeweilige Schiff speichert (nicht-statisch)	
+	
+	public int length;
+	public int health;
+	public boolean placed;
+	
+	public Ship(int id)
+	{
+		length = shipLengths[id];
+		health = length;
+		placed = false;
+	}	
 }

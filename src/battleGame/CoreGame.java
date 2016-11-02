@@ -1,3 +1,9 @@
+/*
+	Die eigentliche Spiellogik wird hier behandelt.
+	Nach jeder spielrelevanten Aktion wird der Spielzustand (gameState) neu berechnet.
+	P1 fängt an, im Vertrauen, dass die Spieler ihr Alter korrekt ermittelt haben.
+*/
+
 package battleGame;
 
 
@@ -19,8 +25,6 @@ public class CoreGame
 		
 		gameState.gameState = GameState.State.P1_ATTACK;
 	}
-	
-	//general methods
 	
 	public void switchTurns()
 	{
@@ -45,8 +49,6 @@ public class CoreGame
 		gameState.status = GameState.Status.NO_ERROR;
 	}
 	
-	//
-	
 	public void placeShip(int id, int x, int y, boolean horizontal)
 	{
 		boolean result;
@@ -60,6 +62,7 @@ public class CoreGame
 			result = p2Field.placeShip(id, x, y, horizontal);
 		}
 		
+		//wenn das Schiff plaziert wurde, wird der nächste Spielzustand eingeleitet
 		if (result)
 		{
 			gameState.nextState();
@@ -80,7 +83,7 @@ public class CoreGame
 			{
 				result = GameState.Status.ATTACK_CELL_ALREADY_ATTACKED;
 			}
-			else if (p1Field.getCellId(x, y) == Battlefield.ID_WATER) 
+			else if (p1Field.getCellId(x, y) == Ship.ID_WATER) 
 			{
 				result = GameState.Status.ATTACK_CELL_HIT_WATER;
 				p1Field.setCellHit(x, y, true);
@@ -110,7 +113,7 @@ public class CoreGame
 			{
 				result = GameState.Status.ATTACK_CELL_ALREADY_ATTACKED;
 			}
-			else if (p2Field.getCellId(x, y) == Battlefield.ID_WATER) 
+			else if (p2Field.getCellId(x, y) == Ship.ID_WATER) 
 			{
 				result = GameState.Status.ATTACK_CELL_HIT_WATER;
 				p2Field.setCellHit(x, y, true);
@@ -180,6 +183,8 @@ public class CoreGame
 		}
 	}
 	
+	//adaptiert die ganzen Methoden aus der Klasse Battlefield für den jeweiligen Spieler
+	
 	public int getFullHealth()
 	{
 		if (turn == P1)
@@ -229,6 +234,8 @@ public class CoreGame
 		
 		return p2Field.getCellId(x, y);
 	}
+	
+	//gibt den eindeutigen Spielzustand zurück
 	
 	public GameState queryGameState()
 	{

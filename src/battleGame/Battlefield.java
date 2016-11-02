@@ -8,16 +8,6 @@ package battleGame;
 
 public class Battlefield 
 {
-	//Die Id's, die jeder Zelle zugeordnet werden, die dann das jeweilige Schiff referenziert
-	//ID_WATER ist ein Sonderfall, sie ist nicht im ships-Array zu finden
-	public static final int ID_CRUISER_1 = 0,
-		ID_DESTROYER_1 = 1,
-		ID_DESTROYER_2 = 2,
-		ID_SUBMARINE_1 = 3,
-		ID_SUBMARINE_2 = 4,
-		ID_SUBMARINE_3 = 5,
-		ID_WATER = 6;
-	
 	//Die Bit-Masken, um aus einer einzelnen Zelle (int) die Informationen über ID und Treffer zu extrahieren
 	private static final int CELL_ID_MASK = 0x000000FF,
 		CELL_HIT_MASK = 0x0000FF00;
@@ -54,7 +44,7 @@ public class Battlefield
 		{
 			for (int y = 0; y < 10; y++)
 			{
-				field[x][y] = ID_WATER;
+				field[x][y] = Ship.ID_WATER;
 			}
 		}
 	}
@@ -62,13 +52,13 @@ public class Battlefield
 	//(Re)Initilisiert alle Schiffe, weist ihnen die standardmäßigen Grundeigenschaften zu
 	public void resetShips()
 	{
-		ships[0] = new Ship("Cruiser 1");
-		ships[1] = new Ship("Destroyer 1");
-		ships[2] = new Ship("Destroyer 2");
-		ships[3] = new Ship("Submarine 1");
-		ships[4] = new Ship("Submarine 2");
-		ships[5] = new Ship("Submarine 3");
-		ships[6] = new Ship("Water");
+		ships[0] = new Ship(0);		//Kreuzer
+		ships[1] = new Ship(1);		//Zerstörer 1
+		ships[2] = new Ship(2);		//Zerstörer 2
+		ships[3] = new Ship(3);		//U-Boot 1
+		ships[4] = new Ship(4);		//U-Boot 2
+		ships[5] = new Ship(5);		//U-Boot 3
+		ships[6] = new Ship(6);		//Wasser
 	}
 	
 	//Die folgenden Methoden arbeiten mit Bit-Logik, sind aber selbsterklärend.
@@ -139,6 +129,7 @@ public class Battlefield
 	//Wurde das Schiff bereits gesetzt?
 	//Sind Anfangs- und Endkoordinate innerhalb des Feldes?
 	//Kollidiert es mit anderen Schiffen?
+	//
 	public boolean isShipPlaceable(int shipId, int x, int y, boolean horizontal)
 	{
 		if (ships[shipId].placed) 
@@ -152,7 +143,7 @@ public class Battlefield
 		
 			for (int px = x; px < x + ships[shipId].length; px++)
 			{
-				if (getCellId(px, y) != ID_WATER) 
+				if (getCellId(px, y) != Ship.ID_WATER) 
 				{
 					return false;
 				}
@@ -165,7 +156,7 @@ public class Battlefield
 		
 		for (int py = y; py < y + ships[shipId].length; py++)
 		{
-			if (getCellId(x, py) != ID_WATER) 
+			if (getCellId(x, py) != Ship.ID_WATER) 
 			{
 				return false;
 			}
@@ -201,8 +192,10 @@ public class Battlefield
 		
 		return true;
 	}
+
+	//exportiert die Methoden aus getCellId(x, y) und isCellHit(x, y), um sie ggf. unabhängig von dem eigentlichen
+	//Spielfeld zu benutzen
 	
-	//
 	public static int getId(int cell)
 	{
 		return cell & CELL_ID_MASK;
