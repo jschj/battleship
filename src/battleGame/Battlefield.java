@@ -28,13 +28,6 @@ public class Battlefield
 
 		resetField();
 		resetShips();
-		
-		placeShip(0, 0, 0, false);
-		placeShip(1, 1, 0, false);
-		placeShip(2, 2, 0, false);
-		placeShip(3, 3, 0, false);
-		placeShip(4, 4, 0, false);
-		placeShip(5, 5, 0, false);
 	}
 	
 	//setzt jede Zelle auf "Wasser"

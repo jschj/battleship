@@ -23,7 +23,7 @@ public class CoreGame
 		p2Field = new Battlefield();
 		gameState = new GameState();
 		
-		gameState.gameState = GameState.State.P1_ATTACK;
+		gameState.gameState = GameState.State.P1_PLACE_CRUISER_1;
 	}
 	
 	public void switchTurns()
