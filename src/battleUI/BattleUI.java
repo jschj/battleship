@@ -35,6 +35,8 @@ public class BattleUI extends JFrame
 	private GameState gameState;
 	private CoreGame coreGame;
 
+	
+	
 	public static void main(String[] args) 
 	{
 		EventQueue.invokeLater(new Runnable() 
@@ -279,6 +281,10 @@ public class BattleUI extends JFrame
 		else if (gameState.status == GameState.Status.ATTACK_CELL_SHIP_DESTROYED)
 		{
 			lbStatus2.setText("You destroyed a ship, switch turn!");
+		}
+		else if (gameState.status == GameState.Status.CELL_OCCUPIED)
+		{
+			lbStatus2.setText("Some cells are occupied, try another configuration!");
 		}
 		
 		String myField = "", enemyField = "";

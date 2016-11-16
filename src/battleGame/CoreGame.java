@@ -6,15 +6,9 @@
 
 package battleGame;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
 
 
-
-public class CoreGame extends GameInterface
+public class CoreGame
 {
 	private static final int P1 = 0,
 							 P2 = 1;
@@ -23,26 +17,8 @@ public class CoreGame extends GameInterface
 	private int turn;
 	private GameState gameState;
 	
-	public CoreGame(JButton action,
-			JTextPane enemyField,
-			JTextPane myField,
-			JCheckBox horizontal,
-			JTextField coordinateX,
-			JTextField coordinateY,
-			JLabel status1,
-			JLabel status2,
-			JLabel health)
+	public CoreGame()
 	{
-		super(action, 
-				enemyField, 
-				myField, 
-				horizontal, 
-				coordinateX, 
-				coordinateY, 
-				status1, 
-				status2, 
-				health);
-		
 		p1Field = new Battlefield();
 		p2Field = new Battlefield();
 		gameState = new GameState();
@@ -89,7 +65,12 @@ public class CoreGame extends GameInterface
 		//wenn das Schiff plaziert wurde, wird der nächste Spielzustand eingeleitet
 		if (result)
 		{
+			gameState.status = GameState.Status.NO_ERROR;
 			gameState.nextState();
+		}
+		else
+		{
+			gameState.status = GameState.Status.CELL_OCCUPIED;
 		}
 	}
 	
